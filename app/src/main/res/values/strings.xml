@@ -12,13 +12,14 @@
     <string name="card_data_valid_until">Действителен по: </string>
     <string name="card_data_valid_from">Действителен с: </string>
     <string name="card_data_passport">Документ: </string>
-    <string name="card_data_metro_time">Время прошлой поездки на метро: </string>
+    <string name="card_data_metro_time">Время: </string>
     <string name="card_data_board_number">Бортовой номер: </string>
+    <string name="card_data_type">Тип:</string>
     <string name="card_data_type_autobus">Автобус</string>
     <string name="card_data_type_trolleybus">Троллейбус</string>
-    <string name="card_data_ground_time">Время прошлой поездки на наземном транспорте: </string>
+    <string name="card_data_ground_time">Время: </string>
     <string name="card_data_name">ФИО: </string>
-    <string name="card_data_metro">Метро</string>
-    <string name="card_data_ground">Наземка</string>
+    <string name="card_data_metro">Метро. Прошлая поездка</string>
+    <string name="card_data_ground">Наземка. Прошлая поездка</string>
 
 </resources>

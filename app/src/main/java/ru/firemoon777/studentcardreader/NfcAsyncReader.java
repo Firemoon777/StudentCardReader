@@ -47,7 +47,15 @@ public class NfcAsyncReader extends AsyncTask<Tag, Void, StudentCardData> {
             data = mfc.readBlock(bIndex + 1);
             result.setValidFrom(byteToDateString(data, 0, true));
             data = mfc.readBlock(bIndex + 2);
-            result.setMetroTime(byteToDateString(data, 1, true));
+            result.setMetroTime(byteToDateString(data, 1, false));
+
+            auth = mfc.authenticateSectorWithKeyB(12, key12B);
+            if(auth == false)
+                return  null;
+
+            bIndex = mfc.sectorToBlock(12);
+            data = mfc.readBlock(bIndex);
+            result.setGroundTime(byteToDateString(data, 9, false));
 
             Log.wtf("Test", "" + result);
 

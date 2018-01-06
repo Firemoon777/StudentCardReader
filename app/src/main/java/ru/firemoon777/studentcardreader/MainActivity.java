@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView validFromTextView;
     private TextView validUntilTextView;
     private TextView metroTimeTextView;
+    private TextView groundTimeTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         validFromTextView = findViewById(R.id.validFromTextView);
         validUntilTextView = findViewById(R.id.validUntilTextView);
         metroTimeTextView = findViewById(R.id.metroTimeTextView);
+        groundTimeTextView = findViewById(R.id.groundTimeTextView);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if(nfcAdapter == null) {
@@ -125,5 +127,6 @@ public class MainActivity extends AppCompatActivity {
         validFromTextView.setText(scd.getValidFrom());
         validUntilTextView.setText(scd.getValidUntil());
         metroTimeTextView.setText(scd.getMetroTime());
+        groundTimeTextView.setText(scd.getGroundTime());
     }
 }
