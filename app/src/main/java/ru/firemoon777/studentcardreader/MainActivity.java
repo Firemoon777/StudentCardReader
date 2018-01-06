@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +20,11 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     NfcAdapter nfcAdapter;
-    View content;
+    public View content;
+
+    private TextView validFromTextView;
+    private TextView validUntilTextView;
+    private TextView metroTimeTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         content = findViewById(R.id.content);
+        validFromTextView = findViewById(R.id.validFromTextView);
+        validUntilTextView = findViewById(R.id.validUntilTextView);
+        metroTimeTextView = findViewById(R.id.metroTimeTextView);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if(nfcAdapter == null) {
@@ -108,9 +116,14 @@ public class MainActivity extends AppCompatActivity {
         if(NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)) {
             Snackbar.make(content, R.string.nfc_tag_found, Snackbar.LENGTH_SHORT).show();
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            NfcAsyncReader asyncReader = new NfcAsyncReader(content);
+            NfcAsyncReader asyncReader = new NfcAsyncReader(this);
             asyncReader.execute(tag);
         }
+    }
 
+    public void updateCardData(StudentCardData scd) {
+        validFromTextView.setText(scd.getValidFrom());
+        validUntilTextView.setText(scd.getValidUntil());
+        metroTimeTextView.setText(scd.getMetroTime());
     }
 }

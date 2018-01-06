@@ -93,4 +93,19 @@ public class StudentCardData {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+
+    @Override
+    public String toString() {
+        return "StudentCardData{" +
+                "validUntil='" + validUntil + '\'' +
+                ", validFrom='" + validFrom + '\'' +
+                ", passport='" + passport + '\'' +
+                ", metroTime='" + metroTime + '\'' +
+                ", boardNumber=" + boardNumber +
+                ", type=" + type +
+                ", groundTime='" + groundTime + '\'' +
+                ", surname='" + surname + '\'' +
+                ", firstName='" + firstName + '\'' +
+                '}';
+    }
 }
