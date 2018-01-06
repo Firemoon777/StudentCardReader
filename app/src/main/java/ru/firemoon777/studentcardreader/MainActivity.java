@@ -15,11 +15,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     NfcAdapter nfcAdapter;
     public View content;
@@ -32,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView typeTextView;
     private TextView passportTextView;
     private TextView nameTextView;
+    private Button showPersonal;
+    private boolean showPersonalBool;
+    private StudentCardData scd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         typeTextView = findViewById(R.id.typeTextView);
         passportTextView = findViewById(R.id.passportTextView);
         nameTextView = findViewById(R.id.nameTextView);
+        showPersonal = findViewById(R.id.showPersonal);
+        showPersonal.setOnClickListener(this);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if(nfcAdapter == null) {
@@ -153,5 +159,27 @@ public class MainActivity extends AppCompatActivity {
         typeTextView.setText(typeString);
         passportTextView.setText(R.string.hidden);
         nameTextView.setText(R.string.hidden);
+        this.showPersonalBool = false;
+        this.scd = scd;
+        this.showPersonal.setText(R.string.activity_show_personal);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.showPersonal) {
+            if(scd != null) {
+                if(showPersonalBool) {
+                    passportTextView.setText(R.string.hidden);
+                    nameTextView.setText(R.string.hidden);
+                    this.showPersonalBool = false;
+                    this.showPersonal.setText(R.string.activity_show_personal);
+                } else {
+                    passportTextView.setText(this.scd.getPassport());
+                    nameTextView.setText(this.scd.getSurname() + " " + this.scd.getFirstName());
+                    this.showPersonalBool = true;
+                    this.showPersonal.setText(R.string.activity_dismiss_personal);
+                }
+            }
+        }
     }
 }

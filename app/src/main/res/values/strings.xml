@@ -8,6 +8,7 @@
     <string name="nfc_tag_unsupported">Карта не поддерживается</string>
 
     <string name="activity_show_personal">Показать персональные данные</string>
+    <string name="activity_dismiss_personal">Скрыть персональные данные</string>
     <!-- -->
     <string name="card_data_valid_until">Действителен по: </string>
     <string name="card_data_valid_from">Действителен с: </string>
@@ -22,5 +23,4 @@
     <string name="card_data_metro">Метро. Прошлая поездка</string>
     <string name="card_data_ground">Наземка. Прошлая поездка</string>
     <string name="hidden">Скрыто</string>
-
 </resources>
