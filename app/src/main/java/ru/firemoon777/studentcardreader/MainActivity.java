@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,7 +19,6 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     NfcAdapter nfcAdapter;
-    TextView tv;
     View content;
 
     @Override
@@ -104,6 +104,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Snackbar.make(content, "Найден тег", Snackbar.LENGTH_SHORT).show();
+        String action = intent.getAction();
+        if(NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)) {
+            Snackbar.make(content, R.string.nfc_tag_found, Snackbar.LENGTH_SHORT).show();
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            NfcAsyncReader asyncReader = new NfcAsyncReader(content);
+            asyncReader.execute(tag);
+        }
+
     }
 }
