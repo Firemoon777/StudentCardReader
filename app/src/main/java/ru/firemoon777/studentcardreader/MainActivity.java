@@ -1,5 +1,10 @@
 package ru.firemoon777.studentcardreader;
 
+import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,8 +13,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    NfcAdapter nfcAdapter;
+    TextView tv;
+    View content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +28,22 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        content = findViewById(R.id.content);
+
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        if(nfcAdapter == null) {
+            Snackbar.make(content, R.string.nfc_unsupported, Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Action", null).show();
+            return;
+        }
+
+        if(nfcAdapter.isEnabled() == false) {
+            Snackbar.make(content, R.string.nfc_disabled, Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Action", null).show();
+            return;
+        }
+
+        Snackbar.make(content, R.string.nfc_ready, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -48,5 +66,44 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setupForegroundDispatch(final Activity activity, NfcAdapter adapter) {
+        final Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        final PendingIntent pendingIntent = PendingIntent.getActivity(activity.getApplicationContext(), 0, intent, 0);
+
+        IntentFilter[] filters = new IntentFilter[1];
+        String[][] techList = new String[][]{ new String[] {
+                "android.nfc.tech.MifareClassic"
+        }};
+
+        filters[0] = new IntentFilter();
+        filters[0].addAction(NfcAdapter.ACTION_TECH_DISCOVERED);
+
+        nfcAdapter.enableForegroundDispatch(activity, pendingIntent, filters, techList);
+    }
+
+    private static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
+        adapter.disableForegroundDispatch(activity);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setupForegroundDispatch(this, nfcAdapter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopForegroundDispatch(this, nfcAdapter);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Snackbar.make(content, "Найден тег", Snackbar.LENGTH_SHORT).show();
     }
 }

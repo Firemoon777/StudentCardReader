@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">StudentCardReader</string>
     <string name="action_settings">Settings</string>
+    <string name="nfc_unsupported">NFC не поддерживается</string>
+    <string name="nfc_disabled">NFC выключен</string>
+    <string name="nfc_ready">ready</string>
 </resources>
