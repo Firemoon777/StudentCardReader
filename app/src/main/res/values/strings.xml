@@ -21,5 +21,6 @@
     <string name="card_data_name">ФИО: </string>
     <string name="card_data_metro">Метро. Прошлая поездка</string>
     <string name="card_data_ground">Наземка. Прошлая поездка</string>
+    <string name="hidden">Скрыто</string>
 
 </resources>

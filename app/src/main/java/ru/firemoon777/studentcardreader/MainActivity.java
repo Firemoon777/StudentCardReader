@@ -17,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 public class MainActivity extends AppCompatActivity {
 
     NfcAdapter nfcAdapter;
@@ -26,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView validUntilTextView;
     private TextView metroTimeTextView;
     private TextView groundTimeTextView;
+    private TextView boardNumberTextView;
+    private TextView typeTextView;
+    private TextView passportTextView;
+    private TextView nameTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
         validUntilTextView = findViewById(R.id.validUntilTextView);
         metroTimeTextView = findViewById(R.id.metroTimeTextView);
         groundTimeTextView = findViewById(R.id.groundTimeTextView);
+        boardNumberTextView = findViewById(R.id.boardNumberTextView);
+        typeTextView = findViewById(R.id.typeTextView);
+        passportTextView = findViewById(R.id.passportTextView);
+        nameTextView = findViewById(R.id.nameTextView);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if(nfcAdapter == null) {
@@ -128,5 +138,20 @@ public class MainActivity extends AppCompatActivity {
         validUntilTextView.setText(scd.getValidUntil());
         metroTimeTextView.setText(scd.getMetroTime());
         groundTimeTextView.setText(scd.getGroundTime());
+        boardNumberTextView.setText(scd.getBoardNumber().toString());
+        String typeString;
+        switch (scd.getType()) {
+            case 0x43:
+                typeString = getString(R.string.card_data_type_trolleybus);
+                break;
+            case 0x79:
+                typeString = getString(R.string.card_data_type_autobus);
+                break;
+            default:
+                typeString = "Неизвестно (" + scd.getType() + ")";
+        }
+        typeTextView.setText(typeString);
+        passportTextView.setText(R.string.hidden);
+        nameTextView.setText(R.string.hidden);
     }
 }

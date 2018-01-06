@@ -44,10 +44,42 @@ public class NfcAsyncReader extends AsyncTask<Tag, Void, StudentCardData> {
             int bIndex = mfc.sectorToBlock(8);
             byte[] data = mfc.readBlock(bIndex);
             result.setValidUntil(byteToDateString(data, 10, true));
+
             data = mfc.readBlock(bIndex + 1);
             result.setValidFrom(byteToDateString(data, 0, true));
+            String passport = byteToRuAsciiString(data, 3, 6);
+            long number = ((int)data[9] & 0xFF) + (((int)data[10] & 0xFF) << 8L) + (((int)data[11] & 0xFF) << 16L);
+            result.setPassport(passport + number);
+
             data = mfc.readBlock(bIndex + 2);
             result.setMetroTime(byteToDateString(data, 1, false));
+
+
+            auth = mfc.authenticateSectorWithKeyA(13, key13A);
+            if(auth == false)
+                return  null;
+
+            bIndex = mfc.sectorToBlock(13);
+            data = mfc.readBlock(bIndex);
+            String surname = byteToRuAsciiString(data, 1, data.length-1);
+            data = mfc.readBlock(bIndex + 1);
+            surname += byteToRuAsciiString(data, 0, data.length);
+            data = mfc.readBlock(bIndex + 2);
+            surname += byteToRuAsciiString(data, 0, 2);
+            result.setSurname(surname.trim());
+
+            auth = mfc.authenticateSectorWithKeyA(14, key14A);
+            if(auth == false)
+                return  null;
+
+            bIndex = mfc.sectorToBlock(14);
+            data = mfc.readBlock(bIndex);
+            String firstName = byteToRuAsciiString(data, 1, data.length-1);
+            data = mfc.readBlock(bIndex + 1);
+            firstName += byteToRuAsciiString(data, 0, data.length);
+            data = mfc.readBlock(bIndex + 2);
+            firstName += byteToRuAsciiString(data, 0, data.length-1);
+            result.setFirstName(firstName.trim());
 
             auth = mfc.authenticateSectorWithKeyB(12, key12B);
             if(auth == false)
@@ -56,6 +88,9 @@ public class NfcAsyncReader extends AsyncTask<Tag, Void, StudentCardData> {
             bIndex = mfc.sectorToBlock(12);
             data = mfc.readBlock(bIndex);
             result.setGroundTime(byteToDateString(data, 9, false));
+            result.setType((int)data[3] & 0xFF);
+            int boardNumber = ((int)data[0] & 0xFF) + ((int)data[1] & 0xFF) << 8;
+            result.setBoardNumber(boardNumber);
 
             Log.wtf("Test", "" + result);
 
