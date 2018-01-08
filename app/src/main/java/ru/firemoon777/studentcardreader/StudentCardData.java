@@ -10,6 +10,8 @@ public class StudentCardData {
     String validFrom;
     String passport;
     String metroTime;
+    // Unknown
+    String debug;
 
     // Sector 12
     Integer boardNumber;
@@ -92,6 +94,14 @@ public class StudentCardData {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getDebug() {
+        return debug;
+    }
+
+    public void setDebug(String debug) {
+        this.debug = debug;
     }
 
     @Override

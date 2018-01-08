@@ -54,6 +54,12 @@ public class NfcAsyncReader extends AsyncTask<Tag, Void, StudentCardData> {
             data = mfc.readBlock(bIndex + 2);
             result.setMetroTime(byteToDateString(data, 1, false));
 
+            byte[] output = new byte[3];
+            for(int i = 0; i < output.length; i++) {
+                output[i] = data[6 + i];
+            }
+            String hex = bytesToHex(output);
+            result.setDebug("Станция "+ hex.substring(0, 2) + "; " + hex.substring(2, 4) + "; Турникет " + hex.substring(4, 6));
 
             auth = mfc.authenticateSectorWithKeyA(13, key13A);
             if(auth == false)
@@ -99,6 +105,17 @@ public class NfcAsyncReader extends AsyncTask<Tag, Void, StudentCardData> {
             this.exception = e;
         }
         return null;
+    }
+
+    private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
+    private static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for ( int j = 0; j < bytes.length; j++ ) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(hexChars);
     }
 
     String byteToRuAsciiString(byte[] data, int offset, int count) {

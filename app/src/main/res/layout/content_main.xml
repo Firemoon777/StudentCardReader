@@ -158,6 +158,20 @@
                     android:id="@+id/passportTextView"
                     android:textSize="20dp"/>
             </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Дебаг"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/debugTextView"
+                    android:textSize="20dp"/>
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

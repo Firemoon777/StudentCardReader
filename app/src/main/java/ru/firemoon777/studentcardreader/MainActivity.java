@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView typeTextView;
     private TextView passportTextView;
     private TextView nameTextView;
+    private TextView debugTextView;
     private Button showPersonal;
     private boolean showPersonalBool;
     private StudentCardData scd;
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         nameTextView = findViewById(R.id.nameTextView);
         showPersonal = findViewById(R.id.showPersonal);
         showPersonal.setOnClickListener(this);
+
+        debugTextView = findViewById(R.id.debugTextView);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if(nfcAdapter == null) {
@@ -159,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         typeTextView.setText(typeString);
         passportTextView.setText(R.string.hidden);
         nameTextView.setText(R.string.hidden);
+        debugTextView.setText(scd.getDebug());
         this.showPersonalBool = false;
         this.scd = scd;
         this.showPersonal.setText(R.string.activity_show_personal);
