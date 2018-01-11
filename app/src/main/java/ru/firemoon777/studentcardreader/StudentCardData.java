@@ -6,16 +6,20 @@ package ru.firemoon777.studentcardreader;
 
 public class StudentCardData {
     // Sector 8
-    String validUntil;
+    String cardType;
     String validFrom;
+    String validUntil;
+    String updateTime;
     String passport;
+    String station;
+    Integer entrance;
     String metroTime;
     // Unknown
     String debug;
 
     // Sector 12
     Integer boardNumber;
-    Integer type;
+    String type;
     String groundTime;
 
     // Sector 13
@@ -64,11 +68,11 @@ public class StudentCardData {
         this.boardNumber = boardNumber;
     }
 
-    public Integer getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -104,18 +108,50 @@ public class StudentCardData {
         this.debug = debug;
     }
 
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getCardType() {
+        return cardType;
+    }
+
+    public void setCardType(String cardType) {
+        this.cardType = cardType;
+    }
+
+    public String getStation() {
+        return station;
+    }
+
+    public void setStation(String station) {
+        this.station = station;
+    }
+
+    public Integer getEntrance() {
+        return entrance;
+    }
+
+    public void setEntrance(Integer entrance) {
+        this.entrance = entrance;
+    }
+
     @Override
     public String toString() {
         return "StudentCardData{" +
-                "validUntil='" + validUntil + '\'' +
+                "cardType='" + cardType + '\'' +
                 ", validFrom='" + validFrom + '\'' +
-                ", passport='" + passport + '\'' +
+                ", validUntil='" + validUntil + '\'' +
+                ", updateTime='" + updateTime + '\'' +
                 ", metroTime='" + metroTime + '\'' +
+                ", debug='" + debug + '\'' +
                 ", boardNumber=" + boardNumber +
                 ", type=" + type +
                 ", groundTime='" + groundTime + '\'' +
-                ", surname='" + surname + '\'' +
-                ", firstName='" + firstName + '\'' +
                 '}';
     }
 }

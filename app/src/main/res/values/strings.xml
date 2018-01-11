@@ -11,11 +11,15 @@
     <string name="activity_dismiss_personal">Скрыть персональные данные</string>
     <!-- -->
     <string name="card_data_valid_until">Действителен по: </string>
+    <string name="card_data_update">Обновление поездок:</string>
+    <string name="card_data_type_card">Тип карты:</string>
+    <string name="card_data_station">Станция: </string>
+    <string name="card_data_entrance">Турникет:</string>
     <string name="card_data_valid_from">Действителен с: </string>
     <string name="card_data_passport">Документ: </string>
     <string name="card_data_metro_time">Время: </string>
     <string name="card_data_board_number">Бортовой номер: </string>
-    <string name="card_data_type">Тип:</string>
+    <string name="card_data_type">Маршрут:</string>
     <string name="card_data_type_autobus">Автобус</string>
     <string name="card_data_type_trolleybus">Троллейбус</string>
     <string name="card_data_ground_time">Время: </string>

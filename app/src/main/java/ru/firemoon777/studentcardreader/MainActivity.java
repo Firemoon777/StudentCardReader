@@ -33,7 +33,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView typeTextView;
     private TextView passportTextView;
     private TextView nameTextView;
+    private TextView stationTextView;
+    private TextView updateTextView;
     private TextView debugTextView;
+    private TextView entranceTextView;
+    private TextView cardTypeTextView;
     private Button showPersonal;
     private boolean showPersonalBool;
     private StudentCardData scd;
@@ -50,11 +54,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         validUntilTextView = findViewById(R.id.validUntilTextView);
         metroTimeTextView = findViewById(R.id.metroTimeTextView);
         groundTimeTextView = findViewById(R.id.groundTimeTextView);
-        boardNumberTextView = findViewById(R.id.boardNumberTextView);
         typeTextView = findViewById(R.id.typeTextView);
         passportTextView = findViewById(R.id.passportTextView);
         nameTextView = findViewById(R.id.nameTextView);
         showPersonal = findViewById(R.id.showPersonal);
+        stationTextView = findViewById(R.id.stationTextView);
+        updateTextView = findViewById(R.id.updateTextView);
+        entranceTextView = findViewById(R.id.entranceTextView);
+        cardTypeTextView = findViewById(R.id.cardTypeTextView);
         showPersonal.setOnClickListener(this);
 
         debugTextView = findViewById(R.id.debugTextView);
@@ -144,19 +151,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void updateCardData(StudentCardData scd) {
+        cardTypeTextView.setText(scd.getCardType());
+        updateTextView.setText(scd.getUpdateTime());
+        entranceTextView.setText(scd.getEntrance().toString());
         validFromTextView.setText(scd.getValidFrom());
         validUntilTextView.setText(scd.getValidUntil());
         metroTimeTextView.setText(scd.getMetroTime());
         groundTimeTextView.setText(scd.getGroundTime());
-        boardNumberTextView.setText(scd.getBoardNumber().toString());
-        String typeString;
-        switch (scd.getType()) {
-            default:
-                typeString = "Неизвестно (" + scd.getType() + ")";
-        }
-        typeTextView.setText(typeString);
+        typeTextView.setText(scd.getType().toString());
         passportTextView.setText(R.string.hidden);
         nameTextView.setText(R.string.hidden);
+        stationTextView.setText(scd.getStation());
         debugTextView.setText(scd.getDebug());
         this.showPersonalBool = false;
         this.scd = scd;
