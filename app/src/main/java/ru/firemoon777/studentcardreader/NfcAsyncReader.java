@@ -85,7 +85,7 @@ public class NfcAsyncReader extends AsyncTask<Tag, Void, StudentCardData> {
                 return "Троллейбус 1";
             case "7900":
                 return "Автобус 21";
-            case "990":
+            case "9900":
                 return "Трамвай 6";
             case "1D3B":
                 return "Автобус 24";
