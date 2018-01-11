@@ -51,9 +51,9 @@ public class StudentCardDataAdapter extends ArrayAdapter<StudentCardDataRow> {
         TextView releaseTextView = convertView.findViewById(R.id.releaseValue);
         if(d.releaseValue == null) {
             releaseTextView.setVisibility(View.GONE);
-            releaseTextView.setBackgroundColor(convertView.getResources().getColor(android.R.color.darker_gray));
+            convertView.setBackgroundColor(convertView.getResources().getColor(android.R.color.darker_gray));
         } else {
-            releaseTextView.setBackgroundColor(convertView.getResources().getColor(android.R.color.white));
+            convertView.setBackgroundColor(convertView.getResources().getColor(android.R.color.white));
             releaseTextView.setVisibility(View.VISIBLE);
             if (d.personal == true && mainActivity.showPersonalBool == false) {
                 releaseTextView.setText("(Скрыто)");
