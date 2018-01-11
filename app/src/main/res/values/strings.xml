@@ -1,15 +1,20 @@
 <resources>
     <string name="app_name">StudentCardReader</string>
-    <string name="action_settings">Settings</string>
+
+    <string name="about">Приложение умеет читать карты учащихся г.Санкт-Петербург.\n\nПриложение сделано исключительно в исследовательских целях.</string>
+    <string name="about_ok">Пониль</string>
+
+    <string name="action_debug">Дебаг</string>
+    <string name="action_personal_data">Персональные данные</string>
+    <string name="action_about">О приложении</string>
+
     <string name="nfc_unsupported">NFC не поддерживается</string>
     <string name="nfc_disabled">NFC выключен</string>
     <string name="nfc_ready">Готов</string>
     <string name="nfc_tag_found">Обнаружен тег</string>
     <string name="nfc_tag_unsupported">Карта не поддерживается</string>
 
-    <string name="activity_show_personal">Показать персональные данные</string>
-    <string name="activity_dismiss_personal">Скрыть персональные данные</string>
-    <!-- -->
+    <string name="card_data_personal">Персональные данные</string>
     <string name="card_data_valid_until">Действителен по: </string>
     <string name="card_data_update">Обновление поездок:</string>
     <string name="card_data_type_card">Тип карты:</string>
@@ -19,11 +24,12 @@
     <string name="card_data_passport">Документ: </string>
     <string name="card_data_metro_time">Время: </string>
     <string name="card_data_board_number">Бортовой номер: </string>
-    <string name="card_data_type">Маршрут:</string>
+    <string name="card_data_route">Маршрут:</string>
     <string name="card_data_type_autobus">Автобус</string>
     <string name="card_data_type_trolleybus">Троллейбус</string>
     <string name="card_data_ground_time">Время: </string>
     <string name="card_data_name">ФИО: </string>
+    <string name="card_data_general">Информация о карте</string>
     <string name="card_data_metro">Метро. Прошлая поездка</string>
     <string name="card_data_ground">Наземка. Прошлая поездка</string>
     <string name="hidden">Скрыто</string>

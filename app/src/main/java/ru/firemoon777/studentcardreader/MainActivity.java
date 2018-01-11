@@ -1,7 +1,9 @@
 package ru.firemoon777.studentcardreader;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NfcAdapter;
@@ -15,32 +17,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     NfcAdapter nfcAdapter;
     public View content;
-
-    private TextView validFromTextView;
-    private TextView validUntilTextView;
-    private TextView metroTimeTextView;
-    private TextView groundTimeTextView;
-    private TextView boardNumberTextView;
-    private TextView typeTextView;
-    private TextView passportTextView;
-    private TextView nameTextView;
-    private TextView stationTextView;
-    private TextView updateTextView;
-    private TextView debugTextView;
-    private TextView entranceTextView;
-    private TextView cardTypeTextView;
-    private Button showPersonal;
-    private boolean showPersonalBool;
+    public boolean showPersonalBool = false;
+    public boolean showDebug = true;
+    private ListView listView;
     private StudentCardData scd;
+    private StudentCardDataAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,21 +45,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
 
         content = findViewById(R.id.content);
-        validFromTextView = findViewById(R.id.validFromTextView);
-        validUntilTextView = findViewById(R.id.validUntilTextView);
-        metroTimeTextView = findViewById(R.id.metroTimeTextView);
-        groundTimeTextView = findViewById(R.id.groundTimeTextView);
-        typeTextView = findViewById(R.id.typeTextView);
-        passportTextView = findViewById(R.id.passportTextView);
-        nameTextView = findViewById(R.id.nameTextView);
-        showPersonal = findViewById(R.id.showPersonal);
-        stationTextView = findViewById(R.id.stationTextView);
-        updateTextView = findViewById(R.id.updateTextView);
-        entranceTextView = findViewById(R.id.entranceTextView);
-        cardTypeTextView = findViewById(R.id.cardTypeTextView);
-        showPersonal.setOnClickListener(this);
+        listView = findViewById(R.id.listView);
 
-        debugTextView = findViewById(R.id.debugTextView);
+        adapter = new StudentCardDataAdapter(this, this.scd);
+        listView.setAdapter(adapter);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if(nfcAdapter == null) {
@@ -97,10 +81,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_debug) {
+            item.setChecked(!item.isChecked());
+            showDebug = item.isChecked();
+            adapter.notifyDataSetChanged();
             return true;
         }
 
+        if (id == R.id.action_show_personal) {
+            item.setChecked(!item.isChecked());
+            showPersonalBool = item.isChecked();
+            adapter.notifyDataSetChanged();
+            return true;
+        }
+
+        if(id == R.id.action_about) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.about).setTitle(R.string.action_about).setNeutralButton(R.string.about_ok,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User cancelled the dialog
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -151,39 +157,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void updateCardData(StudentCardData scd) {
-        cardTypeTextView.setText(scd.getCardType());
-        updateTextView.setText(scd.getUpdateTime());
-        entranceTextView.setText(scd.getEntrance().toString());
-        validFromTextView.setText(scd.getValidFrom());
-        validUntilTextView.setText(scd.getValidUntil());
-        metroTimeTextView.setText(scd.getMetroTime());
-        groundTimeTextView.setText(scd.getGroundTime());
-        typeTextView.setText(scd.getType().toString());
-        passportTextView.setText(R.string.hidden);
-        nameTextView.setText(R.string.hidden);
-        stationTextView.setText(scd.getStation());
-        debugTextView.setText(scd.getDebug());
+        adapter.clear();
+        adapter.addAll(StudentCardParser.parseStudentCardData(this, scd));
         this.showPersonalBool = false;
         this.scd = scd;
-        this.showPersonal.setText(R.string.activity_show_personal);
     }
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.showPersonal) {
-            if(scd != null) {
-                if(showPersonalBool) {
-                    passportTextView.setText(R.string.hidden);
-                    nameTextView.setText(R.string.hidden);
-                    this.showPersonalBool = false;
-                    this.showPersonal.setText(R.string.activity_show_personal);
-                } else {
-                    passportTextView.setText(this.scd.getPassport());
-                    nameTextView.setText(this.scd.getSurname() + " " + this.scd.getFirstName());
-                    this.showPersonalBool = true;
-                    this.showPersonal.setText(R.string.activity_dismiss_personal);
-                }
-            }
-        }
+
     }
 }

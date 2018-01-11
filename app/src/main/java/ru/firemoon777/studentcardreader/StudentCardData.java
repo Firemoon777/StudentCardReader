@@ -11,7 +11,8 @@ public class StudentCardData {
     String validUntil;
     String updateTime;
     String passport;
-    String station;
+    Byte station;
+    Byte stationAdditional;
     Integer entrance;
     String metroTime;
     // Unknown
@@ -19,7 +20,7 @@ public class StudentCardData {
 
     // Sector 12
     Integer boardNumber;
-    String type;
+    String route;
     String groundTime;
 
     // Sector 13
@@ -68,12 +69,12 @@ public class StudentCardData {
         this.boardNumber = boardNumber;
     }
 
-    public String getType() {
-        return type;
+    public String getRoute() {
+        return route;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setRoute(String route) {
+        this.route = route;
     }
 
     public String getGroundTime() {
@@ -124,11 +125,11 @@ public class StudentCardData {
         this.cardType = cardType;
     }
 
-    public String getStation() {
+    public Byte getStation() {
         return station;
     }
 
-    public void setStation(String station) {
+    public void setStation(Byte station) {
         this.station = station;
     }
 
@@ -140,6 +141,14 @@ public class StudentCardData {
         this.entrance = entrance;
     }
 
+    public Byte getStationAdditional() {
+        return stationAdditional;
+    }
+
+    public void setStationAdditional(Byte stationAdditional) {
+        this.stationAdditional = stationAdditional;
+    }
+
     @Override
     public String toString() {
         return "StudentCardData{" +
@@ -147,11 +156,17 @@ public class StudentCardData {
                 ", validFrom='" + validFrom + '\'' +
                 ", validUntil='" + validUntil + '\'' +
                 ", updateTime='" + updateTime + '\'' +
+                ", passport='" + passport + '\'' +
+                ", station=" + station +
+                ", stationAdditional=" + stationAdditional +
+                ", entrance=" + entrance +
                 ", metroTime='" + metroTime + '\'' +
                 ", debug='" + debug + '\'' +
                 ", boardNumber=" + boardNumber +
-                ", type=" + type +
+                ", route='" + route + '\'' +
                 ", groundTime='" + groundTime + '\'' +
+                ", surname='" + surname + '\'' +
+                ", firstName='" + firstName + '\'' +
                 '}';
     }
 }

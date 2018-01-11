@@ -5,7 +5,6 @@ import android.nfc.tech.MifareClassic;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
-import android.view.View;
 
 /**
  * Created by Dragon on 06.01.2018.
@@ -27,75 +26,6 @@ public class NfcAsyncReader extends AsyncTask<Tag, Void, StudentCardData> {
         this.activity = activity;
         this.success = true;
         this.exception = null;
-    }
-
-    public String stationParser(byte n) {
-        int number = (int)n & 0xFF;
-        switch (number) {
-            case 0x00:
-                return "Спортивная";
-            case 0x31:
-                return "Площадь Александра Невского";
-            case 0x6C:
-                return "Балтийская";
-            case 0x6D:
-                return "Пушкинская";
-            case 0x6E:
-                return "Достоевская";
-            case 0x6F:
-                return "Площадь Восстания";
-            case 0x71:
-                return "Чернышевская";
-            case 0x72:
-                return "Площадь Ленина";
-            case 0x75:
-                return "Лесная";
-            case 0x7A:
-                return "Девяткино";
-            case 0x93:
-                return "Проспект Большевиков";
-            case 0x94:
-                return "Ладожская";
-            case 0x95:
-                return "Новочеркасская";
-            case 0x97:
-                return "Лиговский проспект";
-            case 0xCD:
-                return "Парк Победы";
-            case 0xD1:
-                return "Технологический институт";
-            case 0xD3:
-                return "Сенная площадь";
-            case 0xD4:
-                return "Невский проспект";
-            case 0xD6:
-                return "Горьковская";
-            case 0xD7:
-                return "Петрога";
-            case 0xF9:
-                return "Международная";
-            default:
-                return "Не знаю :C";
-        }
-    }
-
-    public String routeParser(String r) {
-        switch (r) {
-            case "4300":
-                return "Троллейбус 1";
-            case "7900":
-                return "Автобус 21";
-            case "9900":
-                return "Трамвай 6";
-            case "1D3B":
-                return "Автобус 24";
-            case "8E01":
-                return "Автобус 27";
-            case "9E3B":
-                return "Автобус 153";
-            default:
-                return "Хз ваще";
-        }
     }
 
     @Override
@@ -132,16 +62,8 @@ public class NfcAsyncReader extends AsyncTask<Tag, Void, StudentCardData> {
                 output[i] = data[6 + i];
             }
             String hex = bytesToHex(output);
-
-            String station = hex.substring(0, 2) + " / " + hex.substring(2, 4) + "\n(" +stationParser(output[0]) + ")";
-            result.setStation(station);
-            if("173B".equals(cardType)) {
-                cardType += " (Полный БСК)";
-            } else if("2302".equals(cardType)) {
-                cardType += " (Только метро)";
-            } else {
-                cardType += " (Ваще хз)";
-            }
+            result.setStation(output[0]);
+            result.setStationAdditional(output[1]);
             result.setCardType(cardType);
             result.setEntrance((int)output[2]);
 
@@ -182,7 +104,7 @@ public class NfcAsyncReader extends AsyncTask<Tag, Void, StudentCardData> {
             data = mfc.readBlock(bIndex);
             result.setGroundTime(byteToDateString(data, 9, false));
             String route = bytesToHex(data).substring(6, 10);
-            result.setType(route + " (" + routeParser(route) + ")");
+            result.setRoute(route);
             int boardNumber = ((int)data[0] & 0xFF) + ((int)data[1] & 0xFF) << 8;
             result.setBoardNumber(boardNumber);
 
