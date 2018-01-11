@@ -43,6 +43,9 @@ public class NfcAsyncReader extends AsyncTask<Tag, Void, StudentCardData> {
 
             int bIndex = mfc.sectorToBlock(8);
             byte[] data = mfc.readBlock(bIndex);
+            String cardType = bytesToHex(data).substring(4, 8);
+
+
             result.setValidUntil(byteToDateString(data, 10, true));
 
             data = mfc.readBlock(bIndex + 1);
@@ -59,7 +62,15 @@ public class NfcAsyncReader extends AsyncTask<Tag, Void, StudentCardData> {
                 output[i] = data[6 + i];
             }
             String hex = bytesToHex(output);
-            result.setDebug("Станция "+ hex.substring(0, 2) + "; " + hex.substring(2, 4) + "; Турникет " + hex.substring(4, 6));
+            String debugString = "Станция "+ hex.substring(0, 2) + "; " + hex.substring(2, 4) + "; Турникет " + hex.substring(4, 6) + "\n";
+            debugString += "Тип карты: " + cardType;
+            if("173B".equals(cardType)) {
+                debugString += " (Полный БСК)";
+            }
+            if("2302".equals(cardType)) {
+                debugString += " (Только метро)";
+            }
+            result.setDebug(debugString);
 
             auth = mfc.authenticateSectorWithKeyA(13, key13A);
             if(auth == false)

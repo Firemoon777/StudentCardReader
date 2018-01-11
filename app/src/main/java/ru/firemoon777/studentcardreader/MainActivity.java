@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         IntentFilter[] filters = new IntentFilter[1];
         String[][] techList = new String[][]{ new String[] {
+                "android.nfc.tech.NfcA",
                 "android.nfc.tech.MifareClassic"
         }};
 
@@ -150,12 +151,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         boardNumberTextView.setText(scd.getBoardNumber().toString());
         String typeString;
         switch (scd.getType()) {
-            case 0x43:
-                typeString = getString(R.string.card_data_type_trolleybus);
-                break;
-            case 0x79:
-                typeString = getString(R.string.card_data_type_autobus);
-                break;
             default:
                 typeString = "Неизвестно (" + scd.getType() + ")";
         }
